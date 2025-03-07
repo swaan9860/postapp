@@ -1,0 +1,16 @@
+<html>
+<head>
+    <title>Blog</title>
+</head>
+<body>
+    <h1>All Blogs</h1>
+    <a href="{% url 'home' %}">Home</a>
+    {% for blog in blogs %}
+        <div>
+            <h2><a href="{% url 'blog_detail' blog.pk %}">{{ blog.title }}</a></h2>
+        </div>
+    {% empty %}
+        <p>Sorry! No blogs available.</p>
+    {% endfor %}
+</body>
+</html>

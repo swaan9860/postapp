@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My BLogs</title>
+</head>
+<body>
+    <h1>Welcome to My BLog</h1>
+    {% if request.user.is_authenticated %}
+    <h2>Hi, {{user}}</h2>
+        <p><a href="{% url 'blog_list' %}">View all blogs</a></p>
+        <p>
+        You're are logged in.Would you like to log out ?
+        <a href="{% url 'user_logout' %}">Logout
+        </a>
+    </p>
+
+    {% else %}
+
+    <p>
+        You're not logged in.Would you like to log in ?
+        <a href="{% url 'user_login' %}">Login
+        </a>
+    </p>
+
+    {% endif %}
+
+   
+</body>
+</html>
