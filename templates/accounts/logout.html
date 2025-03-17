@@ -1,23 +1,86 @@
-{% comment %} {% extends "home.html" %} {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<!-- Declare HTML5 document type and set language to English -->
+<head>
+    <!-- Head section for metadata and external resources -->
+    <meta charset="UTF-8">
+    <!-- Set character encoding to UTF-8 for proper text rendering -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ensure mobile responsiveness with viewport settings -->
+    <title>Logout</title>
+    <!-- Page title displayed in the browser tab -->
 
-{% comment %} {% block content %} {% endcomment %}
+    <!-- Bootstrap 5.0.2 CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+          crossorigin="anonymous">
+    <!-- Include Bootstrap 5.0.2 CSS for styling and responsive design -->
 
-{% if request.user.is_authenticated %}
-<div style="margin-top:30px;">
-    <form method="POST">
-        {% csrf_token %}
-        <p>Are you sure you want to logout ?</p>
-        <button type="submit">Logout</button>
-    </form>
-</div>
-{% else %}
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f0f2f5;    /* Light gray-blue background for the page */
+            height: 100vh;               /* Full viewport height */
+            display: flex;               /* Use flexbox to center description */
+            justify-content: center;     /* Center horizontally */
+            align-items: center;         /* Center vertically */
+        }
+        .logout-container {
+            background-color: #ffffff;   /* White background for the container */
+            padding: 30px;              /* Internal padding for spacing */
+            border-radius: 10px;        /* Rounded corners for a modern look */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+            width: 100%;                /* Full width within max-width */
+            max-width: 400px;           /* Limit maximum width of the container */
+            text-align: center;         /* Center text inside container */
+        }
+        .logout-form {
+            margin-top: 20px;          /* Space above the form */
+        }
+        .login-prompt {
+            margin-top: 20px;          /* Space above the login prompt */
+        }
+        .login-prompt a {
+            text-decoration: none;     /* Remove underline from login link */
+        }
+    </style>
+    <!-- Inline CSS for custom styling beyond Bootstrap -->
+</head>
+<body>
+    <!-- Body section for visible description -->
+    <div class="logout-container">
+        <!-- Container for logout content with custom styling -->
 
-<p>
-    You're not logged in.Would you like to log in ?
-    <a href="{% url 'user_login' %}">login ?
-    </a>
-</p>
+        {% if request.user.is_authenticated %}
+        <!-- Django template conditional: check if user is logged in -->
+            <div class="logout-form">
+                <!-- Container for logout form with custom spacing -->
+                <form method="POST">
+                    <!-- Form with POST method for logout submission -->
+                    {% csrf_token %}
+                    <!-- Django CSRF token for security against cross-site request forgery -->
+                    <p>Are you sure you want to logout?</p>
+                    <!-- Confirmation message for logout -->
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                    <!-- Submit button styled as Bootstrap danger button -->
+                </form>
+            </div>
+        {% else %}
+        <!-- Else block for users who are not authenticated -->
+            <p class="login-prompt">
+                <!-- Paragraph for login prompt with custom styling -->
+                You're not logged in. Would you like to log in?
+                <a href="{% url 'user_login' %}" class="btn btn-outline-primary">Login</a>
+                <!-- Link to login page styled as Bootstrap outlined primary button -->
+            </p>
+        {% endif %}
+    </div>
 
-{% endif %}
-
-{% comment %} {% endblock %} {% endcomment %}
+    <!-- Bootstrap 5.0.2 JS Bundle (optional, for interactive components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+            crossorigin="anonymous"></script>
+    <!-- Include Bootstrap JS for potential interactive features -->
+</body>
+</html>

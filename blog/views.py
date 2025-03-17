@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect             # Import shortcuts for rendering and redirecting
 from django.contrib.auth import authenticate, login, logout  # Import authentication functions
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User               # Import Django's User model
 from django.contrib import messages                       # Import messages framework for user feedback
 from django.shortcuts import render, get_object_or_404    # Import get_object_or_404 for safe object retrieval
@@ -52,6 +53,18 @@ def user_login(request):
 
     return render(request, 'accounts/login.html')  # Render login template for GET or failed POST
 
+@login_required
+def create_blog(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        if title and description:
+            Blog.objects.create(title=title, description=description, author=request.user)
+            messages.success(request, 'Blog created successfully!')
+            return redirect('blog_list')
+        else:
+            messages.error(request, 'Please fill in all fields.')
+    return render(request, 'blog/blog_create.html')
 
 # Logout View
 def user_logout(request):

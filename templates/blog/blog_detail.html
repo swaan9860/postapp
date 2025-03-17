@@ -1,13 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<!-- Declare HTML5 document type and set language to English -->
 <head>
+    <!-- Head section for metadata and external resources -->
+    <meta charset="UTF-8">
+    <!-- Set character encoding to UTF-8 for proper text rendering -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ensure mobile responsiveness with viewport settings -->
     <title>{{ blog.title }}</title>
+    <!-- Dynamic page title using Django template variable -->
+
+    <!-- Bootstrap 5.0.2 CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+          crossorigin="anonymous">
+    <!-- Include Bootstrap 5.0.2 CSS for styling and responsive design -->
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;    /* Light gray background for the page */
+            padding: 20px;               /* Padding around the body content */
+        }
+        .blog-container {
+            max-width: 800px;           /* Limit maximum width of content */
+            margin: 0 auto;             /* Center the container horizontally */
+        }
+        .blog-header {
+            color: #343a40;            /* Dark gray color for the header */
+            margin-bottom: 20px;       /* Space below the header */
+        }
+        .blog-description {
+            background-color:rgb(255, 255, 255); /* White background for blog content */
+            padding: 20px;            /* Internal padding for spacing */
+            border-radius: 5px;       /* Rounded corners */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+            line-height: 1.6;         /* Improved readability with line spacing */
+        }
+        .back-link {
+            margin-top: 20px;         /* Space above the back link */
+            display: block;           /* Make the link a block element */
+        }
+        .back-link a {
+            text-decoration: none;    /* Remove underline from link */
+        }
+    </style>
+    <!-- Inline CSS for custom styling beyond Bootstrap -->
 </head>
 <body>
-    <h1>{{ blog.title }}</h1>
-    <div>
-        {{ blog.content|linebreaks }}
+    <!-- Body section for visible content -->
+    <div class="blog-container">
+        <!-- Container for blog details with custom styling -->
+        <h1 class="blog-header">{{ blog.title }}</h1>
+        <!-- Dynamic blog title with custom header styling -->
+
+        <div class="blog-description">
+            <!-- Container for blog description with custom styling -->
+            {{ blog.description|linebreaks }}
+            <!-- Display blog description with Django linebreaks filter for formatting -->
+        </div>
+
+        <p class="back-link">
+            <!-- Paragraph for back link with custom styling -->
+            <a href="{% url 'blog_list' %}" class="btn btn-outline-primary">Back to all blogs</a>
+            <!-- Link to blog list styled as a Bootstrap outlined primary button -->
+        </p>
     </div>
-    <p><a href="{% url 'blog_list' %}">Back to all blogs</a></p>
+
+    <!-- Bootstrap 5.0.2 JS Bundle (optional, for interactive components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+            crossorigin="anonymous"></script>
+    <!-- Include Bootstrap JS for potential interactive features -->
 </body>
 </html>

@@ -1,32 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Declare HTML5 document type and set language to English -->
 <head>
+    <!-- Head section for metadata and external resources -->
     <meta charset="UTF-8">
+    <!-- Set character encoding to UTF-8 for proper text rendering -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ensure mobile responsiveness with viewport settings -->
     <title>Signup</title>
+    <!-- Page title displayed in the browser tab -->
+
+    <!-- Bootstrap 5.0.2 CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+          crossorigin="anonymous">
+    <!-- Include Bootstrap 5.0.2 CSS for prebuilt styling and responsiveness -->
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f0f2f5;    /* Light gray-blue background for the page */
+            height: 100vh;               /* Full viewport height */
+            display: flex;               /* Use flexbox to center content */
+            justify-content: center;     /* Center horizontally */
+            align-items: center;         /* Center vertically */
+        }
+        .signup-container {
+            background-color: #ffffff;   /* White background for the form container */
+            padding: 30px;              /* Internal padding for spacing */
+            border-radius: 10px;        /* Rounded corners for a modern look */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+            width: 100%;                /* Full width within max-width */
+            max-width: 400px;           /* Limit maximum width of the form */
+        }
+        .form-label {
+            font-weight: 500;           /* Slightly bold labels for readability */
+            margin-bottom: 5px;         /* Space below labels */
+        }
+        .error-message {
+            color: #dc3545;             /* Red color for error messages (matches Bootstrap danger) */
+            margin-bottom: 15px;        /* Space below error messages */
+        }
+        .login-link {
+            margin-top: 15px;           /* Space above login link */
+            text-align: center;         /* Center the login text and link */
+        }
+    </style>
+    <!-- Inline CSS for custom styling beyond Bootstrap defaults -->
 </head>
 <body>
-    <h2>Signup</h2>
+    <!-- Body section for visible content -->
+    <div class="signup-container">
+        <!-- Container for the signup form with custom styling -->
+        <h2 class="text-center mb-4">Signup</h2>
+        <!-- Centered heading with margin-bottom for spacing -->
 
-    {% if messages %}
-        {% for message in messages %}
-            <p style="color: red;">{{ message }}</p>
-        {% endfor %}
-    {% endif %}
+        {% if messages %}
+        <!-- Django template conditional to display messages (e.g., errors) -->
+            {% for message in messages %}
+            <!-- Loop through each message -->
+                <p class="error-message">{{ message }}</p>
+                <!-- Display message with custom error styling -->
+            {% endfor %}
+        {% endif %}
 
-    <form method="post">
-        {% csrf_token %}
-        <label>Username:</label>
-        <input type="text" name="username" required><br>
-        <label>Email:</label>
-        <input type="email" name="email" required><br>
-        <label>Password:</label>
-        <input type="password" name="password1" required><br>
-        <label>Confirm Password:</label>
-        <input type="password" name="password2" required><br>
-        <button type="submit">Signup</button>
-    </form>
+        <form method="post">
+            <!-- Form with POST method for submitting signup data -->
+            {% csrf_token %}
+            <!-- Django CSRF token for security against cross-site request forgery -->
 
-    <p>Already have an account? <a href="{% url 'user_login' %}">Login</a></p>
+            <div class="mb-3">
+                <!-- Bootstrap margin-bottom class for spacing -->
+                <label for="username" class="form-label">Username:</label>
+                <!-- Label with Bootstrap form-label class and custom styling -->
+                <input type="text" name="username" id="username" class="form-control" required>
+                <!-- Text input with Bootstrap form-control, required field -->
+            </div>
+
+            <div class="mb-3">
+                <!-- Bootstrap margin-bottom class for spacing -->
+                <label for="email" class="form-label">Email:</label>
+                <!-- Label for email field -->
+                <input type="email" name="email" id="email" class="form-control" required>
+                <!-- Email input with Bootstrap form-control, required field -->
+            </div>
+
+            <div class="mb-3">
+                <!-- Bootstrap margin-bottom class for spacing -->
+                <label for="password1" class="form-label">Password:</label>
+                <!-- Label for password field -->
+                <input type="password" name="password1" id="password1" class="form-control" required>
+                <!-- Password input with Bootstrap form-control, required field -->
+            </div>
+
+            <div class="mb-3">
+                <!-- Bootstrap margin-bottom class for spacing -->
+                <label for="password2" class="form-label">Confirm Password:</label>
+                <!-- Label for password confirmation field -->
+                <input type="password" name="password2" id="password2" class="form-control" required>
+                <!-- Password confirmation input with Bootstrap form-control, required field -->
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Signup</button>
+            <!-- Submit button with Bootstrap primary styling, full width -->
+        </form>
+
+        <p class="login-link">
+            <!-- Paragraph for login prompt with custom centering -->
+            Already have an account? 
+            <a href="{% url 'user_login' %}" class="text-primary">Login</a>
+            <!-- Link to login page with Bootstrap text-primary color -->
+        </p>
+    </div>
+
+    <!-- Bootstrap 5.0.2 JS Bundle (optional, for interactive components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+            crossorigin="anonymous"></script>
+    <!-- Include Bootstrap JS for potential interactive features -->
 </body>
 </html>

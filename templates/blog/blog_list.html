@@ -1,16 +1,94 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<!-- Declare HTML5 document type and set language to English -->
 <head>
+    <!-- Head section for metadata and external resources -->
+    <meta charset="UTF-8">
+    <!-- Set character encoding to UTF-8 for proper text rendering -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ensure mobile responsiveness with viewport settings -->
     <title>Blog</title>
+    <!-- Page title displayed in the browser tab -->
+
+    <!-- Bootstrap 5.0.2 CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+          crossorigin="anonymous">
+    <!-- Include Bootstrap 5.0.2 CSS for styling and responsive design -->
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;    /* Light gray background for the page */
+            padding: 20px;               /* Padding around the body content */
+        }
+        .blog-container {
+            max-width: 800px;           /* Limit maximum width of content */
+            margin: 0 auto;             /* Center the container horizontally */
+        }
+        .blog-header {
+            color: #343a40;            /* Dark gray color for the header */
+            margin-bottom: 30px;       /* Space below the header */
+        }
+        .home-link {
+            display: block;            /* Make the link a block element */
+            margin-bottom: 20px;       /* Space below the home link */
+        }
+        .blog-item {
+            background-color: #ffffff; /* White background for each blog item */
+            padding: 15px;            /* Internal padding for spacing */
+            margin-bottom: 20px;      /* Space between blog items */
+            border-radius: 5px;       /* Rounded corners */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        }
+        .blog-title {
+            margin: 0;                /* Remove default margin from h2 */
+        }
+        .blog-title a {
+            text-decoration: none;    /* Remove underline from blog title links */
+            color: #007bff;          /* Bootstrap primary blue for links */
+        }
+        .blog-title a:hover {
+            text-decoration: underline; /* Add underline on hover for feedback */
+        }
+        .no-blogs {
+            color: #6c757d;           /* Gray color for no-blogs message */
+            text-align: center;       /* Center the message */
+        }
+    </style>
+    <!-- Inline CSS for custom styling beyond Bootstrap -->
 </head>
 <body>
-    <h1>All Blogs</h1>
-    <a href="{% url 'home' %}">Home</a>
-    {% for blog in blogs %}
-        <div>
-            <h2><a href="{% url 'blog_detail' blog.pk %}">{{ blog.title }}</a></h2>
-        </div>
-    {% empty %}
-        <p>Sorry! No blogs available.</p>
-    {% endfor %}
+    <!-- Body section for visible content -->
+    <div class="blog-container">
+        <!-- Container for blog list with custom styling -->
+        <h1 class="blog-header">All Blogs</h1>
+        <!-- Main heading with custom class for styling -->
+
+        <a href="{% url 'home' %}" class="home-link btn btn-outline-primary">Home</a>
+        <!-- Home link styled as a Bootstrap outlined primary button -->
+
+        {% for blog in blogs %}
+        <!-- Django template loop to iterate over blogs -->
+            <div class="blog-item">
+                <!-- Container for each blog item with custom styling -->
+                <h2 class="blog-title">
+                    <a href="{% url 'blog_detail' blog.pk %}">{{ blog.title }}</a>
+                </h2>
+                <!-- Blog title as a clickable link to detail page -->
+            </div>
+        {% empty %}
+        <!-- Django template empty block if no blogs exist -->
+            <p class="no-blogs">Sorry! No blogs available.</p>
+            <!-- Message displayed when no blogs are found -->
+        {% endfor %}
+    </div>
+
+    <!-- Bootstrap 5.0.2 JS Bundle (optional, for interactive components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+            crossorigin="anonymous"></script>
+    <!-- Include Bootstrap JS for potential interactive features -->
 </body>
 </html>

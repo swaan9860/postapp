@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Declare HTML5 document type and set language to English -->
+<head>
+    <!-- Head section for metadata and external resources -->
+    <meta charset="UTF-8">
+    <!-- Set character encoding to UTF-8 for proper text rendering -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ensure mobile responsiveness with viewport settings -->
+    <title>Create New Blog</title>
+    <!-- Page title displayed in the browser tab -->
+
+    <!-- Bootstrap 5.0.2 CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+          crossorigin="anonymous">
+    <!-- Include Bootstrap 5.0.2 CSS for styling and responsive design -->
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f0f2f5;    /* Light gray-blue background for the page */
+            padding: 20px;               /* Padding around the body content */
+        }
+        .create-container {
+            background-color: #ffffff;   /* White background for the form container */
+            padding: 30px;              /* Internal padding for spacing */
+            border-radius: 10px;        /* Rounded corners for a modern look */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+            max-width: 800px;           /* Limit maximum width of the container */
+            margin: 0 auto;             /* Center the container horizontally */
+        }
+        .create-header {
+            color: #343a40;            /* Dark gray color for the header */
+            margin-bottom: 20px;       /* Space below the header */
+            text-align: center;        /* Center the header text */
+        }
+        .form-label {
+            font-weight: 500;          /* Slightly bold labels for readability */
+            margin-bottom: 5px;        /* Space below labels */
+        }
+        .error-message {
+            color: #dc3545;            /* Red color for error messages (matches Bootstrap danger) */
+            margin-bottom: 15px;       /* Space below error messages */
+            text-align: center;        /* Center error messages */
+        }
+        .back-link {
+            margin-top: 20px;          /* Space above the back link */
+            text-align: center;        /* Center the back link */
+        }
+        .back-link a {
+            text-decoration: none;     /* Remove underline from link */
+        }
+    </style>
+    <!-- Inline CSS for custom styling beyond Bootstrap -->
+</head>
+<body>
+    <!-- Body section for visible content -->
+    <div class="create-container">
+        <!-- Container for blog creation form with custom styling -->
+        <h1 class="create-header">Create New Blog</h1>
+        <!-- Heading for the create page with custom styling -->
+
+        {% if messages %}
+        <!-- Django template conditional to display messages (e.g., errors) -->
+            {% for message in messages %}
+            <!-- Loop through each message -->
+                <p class="error-message">{{ message }}</p>
+                <!-- Display message with custom error styling -->
+            {% endfor %}
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+        <!-- Django template conditional: check if user is logged in -->
+            <form method="POST">
+                <!-- Form with POST method for submitting blog data -->
+                {% csrf_token %}
+                <!-- Django CSRF token for security against cross-site request forgery -->
+
+                <div class="mb-3">
+                    <!-- Bootstrap margin-bottom class for spacing -->
+                    <label for="title" class="form-label">Title:</label>
+                    <!-- Label for title field with custom styling -->
+                    <input type="text" name="title" id="title" class="form-control" required>
+                    <!-- Text input for blog title with Bootstrap styling, required field -->
+                </div>
+
+                <div class="mb-3">
+                    <!-- Bootstrap margin-bottom class for spacing -->
+                    <label for="description" class="form-label">Description:</label>
+                    <!-- Label for description field with custom styling -->
+                    <textarea name="description" id="description" class="form-control" rows="10" required></textarea>
+                    <!-- Textarea for blog description with Bootstrap styling, required field -->
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Create Blog</button>
+                <!-- Submit button styled as Bootstrap primary button, full width -->
+            </form>
+
+            <p class="back-link">
+                <!-- Paragraph for back link with custom styling -->
+                <a href="{% url 'blog_list' %}" class="btn btn-outline-secondary">Back to All Blogs</a>
+                <!-- Link to blog list styled as Bootstrap outlined secondary button -->
+            </p>
+        {% else %}
+        <!-- Else block for users who are not authenticated -->
+            <p class="error-message">
+                <!-- Message for unauthenticated users with error styling -->
+                You need to be logged in to create a blog. 
+                <a href="{% url 'user_login' %}" class="btn btn-outline-primary">Login</a>
+                <!-- Link to login page styled as Bootstrap outlined primary button -->
+            </p>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap 5.0.2 JS Bundle (optional, for interactive components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+            crossorigin="anonymous"></script>
+    <!-- Include Bootstrap JS for potential interactive features -->
+</body>
+</html>
