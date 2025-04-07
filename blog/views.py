@@ -1,25 +1,23 @@
-from django.shortcuts import render, redirect             # Import shortcuts for rendering and redirecting
-from django.contrib.auth import authenticate, login, logout  # Import authentication functions
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User               # Import Django's User model
-from django.contrib import messages                       # Import messages framework for user feedback
-from django.shortcuts import render, get_object_or_404    # Import get_object_or_404 for safe object retrieval
-from .models import Blog                                  # Import Blog model from current app
+from django.contrib.auth.models import User
+from django.contrib import messages
+from .models import Blog
+from .forms import BlogForm  # Assuming you have a BlogForm for editing blogs
 
 def home(request):
     """
     Render the home page.
     """
-    return render(request, 'blog/home.html')  # Render home template without context
-
+    return render(request, 'blog/home.html')
 
 def blog_list(request):
     """
     Display a list of all blog posts.
     """
-    blogs = Blog.objects.all()  # Retrieve all Blog objects from database
-    return render(request, 'blog/blog_list.html', {'blogs': blogs})  # Render blog list with blogs in context
-
+    blogs = Blog.objects.all()
+    return render(request, 'blog/blog_list.html', {'blogs': blogs})
 
 def blog_detail(request, pk):
     """
@@ -27,85 +25,136 @@ def blog_detail(request, pk):
     Args:
         pk: Primary key of the blog post
     """
-    blog = get_object_or_404(Blog, pk=pk)  # Get blog or return 404 if not found
-    return render(request, 'blog/blog_detail.html', {'blog': blog})  # Render blog detail with blog in context
+    blog = get_object_or_404(Blog, pk=pk)
+    return render(request, 'blog/blog_detail.html', {'blog': blog})
 
-
-# Login View
 def user_login(request):
     """
     Handle user login functionality.
-    Authenticates users and redirects to dashboard on success.
     """
     if request.method == 'POST':
-        # Handle form submission
-        username = request.POST['username']  # Extract username from POST data
-        password = request.POST['password']  # Extract password from POST data
-        user = authenticate(request, username=username, password=password)  # Attempt authentication
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            # If authentication succeeds
-            login(request, user)         # Log the user in, creating a session
-            return redirect('home')  # Redirect to blog_list
+            login(request, user)
+            return redirect('home')
         else:
-            # If authentication fails
-            messages.error(request, "Invalid username or password")  # Add error message
+            messages.error(request, "Invalid username or password")
 
-    return render(request, 'accounts/login.html')  # Render login template for GET or failed POST
+    return render(request, 'accounts/login.html')
 
 @login_required
 def create_blog(request):
+    """
+    Handle blog creation with picture upload.
+    """
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
+        picture = request.FILES.get('picture')
+
         if title and description:
-            Blog.objects.create(title=title, description=description, author=request.user)
+            Blog.objects.create(
+                title=title,
+                description=description,
+                author=request.user,
+                picture=picture
+            )
             messages.success(request, 'Blog created successfully!')
             return redirect('blog_list')
         else:
-            messages.error(request, 'Please fill in all fields.')
+            messages.error(request, 'Please fill in all required fields (title and description).')
     return render(request, 'blog/blog_create.html')
 
-# Logout View
+@login_required
+def upload_media(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        picture = request.FILES.get('picture')
+        if title and description:
+            Blog.objects.create(title=title, description=description, author=request.user, picture=picture)
+            messages.success(request, 'Picture uploaded successfully!')
+            return redirect('blog_list')
+        else:
+            messages.error(request, 'Please fill in all required fields.')
+    return render(request, 'blog/blog_create.html')
+
 def user_logout(request):
     """
     Handle user logout functionality.
-    Logs out the user and redirects to login page.
     """
-    logout(request)  # End the user's session
-    messages.success(request, "You have been logged out.")  # Add success message
-    return redirect('user_login')  # Redirect to login page
+    logout(request)
+    messages.success(request, "You have been logged out.")
+    return redirect('user_login')
 
-
-# Signup View
 def signup(request):
     """
     Handle user registration functionality.
-    Creates a new user account and redirects to login on success.
     """
     if request.method == 'POST':
-        # Handle form submission
-        username = request.POST['username']    # Extract username from POST data
-        email = request.POST['email']          # Extract email from POST data
-        password1 = request.POST['password1']  # Extract first password entry
-        password2 = request.POST['password2']  # Extract password confirmation
+        username = request.POST['username']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
 
         if password1 != password2:
-            # Check if passwords match
-            messages.error(request, "Passwords do not match")  # Add error message
-            return redirect('signup')  # Redirect back to signup page
+            messages.error(request, "Passwords do not match")
+            return redirect('signup')
 
         if User.objects.filter(username=username).exists():
-            # Check if username is already taken
-            messages.error(request, "Username already exists")  # Add error message
-            return redirect('signup')  # Redirect back to signup page
+            messages.error(request, "Username already exists")
+            return redirect('signup')
 
-        # Create new user if validation passes
         user = User.objects.create_user(username=username, email=email, password=password1)
-        user.save()  # Save the new user to database
-        messages.success(request, "Account created successfully! Please log in.")  # Add success message
-        return redirect('login')  # Redirect to login page
+        user.save()
+        messages.success(request, "Account created successfully! Please log in.")
+        return redirect('user_login')
 
-    return render(request, 'accounts/signup.html')  # Render signup template for GET requests
+    return render(request, 'accounts/signup.html')
 
+@login_required
+def edit_blog(request, pk):
+    blog = get_object_or_404(Blog, pk=pk)
+    if request.user.id != blog.author.id:  # Changed to id for consistency
+        messages.error(request, "You do not have permission to edit this blog.")
+        return redirect('blog_list')
+    if request.method == 'POST':
+        form = BlogForm(request.POST, request.FILES, instance=blog)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Blog updated successfully!')
+            return redirect('blog_detail', pk=blog.pk)
+    else:
+        form = BlogForm(instance=blog)
+    return render(request, 'blog/blog_edit.html', {'form': form, 'blog': blog})
 
+@login_required
+def delete_blog(request, pk):
+    """
+    Handle deleting a blog post.
+    Only the author of the blog can delete it.
+    """
+    blog = get_object_or_404(Blog, pk=pk)
+
+    # Check if the logged-in user is the author of the blog
+    if request.user.id != blog.author.id:
+        messages.error(request, "You do not have permission to delete this blog.")
+        return redirect('blog_list')
+
+    if request.method == 'POST':
+        blog.delete()
+        messages.success(request, 'Blog deleted successfully!')
+        return redirect('blog_list')
+
+    return render(request, 'blog/blog_confirm_delete.html', {'blog': blog})
+
+from django.conf import settings
+
+def debug_template_paths():
+    import os
+    print("Django is searching for templates in:")
+    for path in settings.TEMPLATES[0]['DIRS']:
+        print(f" - {os.path.abspath(path)}")

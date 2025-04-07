@@ -1,87 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<!-- Declare the document type as HTML5 and set the language to English -->
-<head>
-    <!-- Define the head section containing metadata and external resources -->
-    <meta charset="UTF-8">
-    <!-- Set character encoding to UTF-8 for proper text rendering -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Ensure responsiveness on mobile devices by setting viewport width and initial scale -->
-    <title>My Blogs</title>
-    <!-- Set the page title displayed in the browser tab -->
-    
-    <!-- Bootstrap 5.0.2 CSS from CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
-          rel="stylesheet" 
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
-          crossorigin="anonymous">
-    <!-- Link to Bootstrap 5.0.2 CSS for prebuilt styling and responsive design -->
-
-    <!-- Custom CSS -->
-    <style>
-        body {
-            padding: 20px;              /* Add padding around the body content */
-            background-color: #f8f9fa; /* Set a light gray background color */
-        }
-        .welcome-header {
-            color: #343a40;            /* Dark gray color for the header text */
-            margin-bottom: 20px;       /* Space below the header */
-        }
-        .auth-message {
-            background-color: #ffffff; /* White background for the auth section */
-            padding: 15px;            /* Internal padding for content spacing */
-            border-radius: 5px;       /* Rounded corners for a softer look */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-        }
-        .btn-link {
-            text-decoration: none;     /* Remove underline from button links */
-        }
-    </style>
-    <!-- Inline CSS for custom styling beyond Bootstrap defaults -->
-</head>
-<body>
-    <!-- Begin the body section where visible content is placed -->
+{% extends 'base.html' %}
+{% block content%}
     <div class="container">
-        <!-- Bootstrap container class for centered, responsive content width -->
-        <h1 class="welcome-header">Welcome to My Blog</h1>
-        <!-- Main heading with custom class for styling -->
-
-        {% if request.user.is_authenticated %}
-        <!-- Django template conditional: check if user is logged in -->
-            <div class="auth-message">
-                <!-- Container for authenticated user message with custom styling -->
-                <h2>Hi, {{ user }}</h2>
-                <!-- Personalized greeting using Django template variable -->
-                <p>
-                    <a href="{% url 'blog_list' %}" class="btn btn-primary">View all blogs</a>
-                    <!-- Link to blog list with Bootstrap button styling -->
-                    <a href="{% url 'blog_create' %}" class="btn btn-success">Create Blog</a>
-
-                </p>
-                <p>
-                    You are logged in. Would you like to log out?
-                    <a href="{% url 'user_logout' %}" class="btn btn-outline-danger btn-link">Logout</a>
-                    <!-- Logout link styled as an outlined danger button -->
-                </p>
-            </div>
-        {% else %}
-        <!-- Else block for users who are not authenticated -->
-            <div class="auth-message">
-                <!-- Container for unauthenticated user message -->
-                <p>
-                    You're not logged in. Would you like to log in?
-                    <a href="{% url 'user_login' %}" class="btn btn-outline-primary btn-link">Login</a>
-                    <!-- Login link styled as an outlined primary button -->
-                </p>
-            </div>
-        {% endif %}
-        <!-- End of Django template conditional -->
+        <h1 class="welcome-header">Welcome to Travel Blogs</h1>
+        <p>Join us in exploring the world and sharing your experience for the world to see !!</p>
+        
+        <div class="auth-message">
+            {% if request.user.is_authenticated %}
+                <h5>You are logged in as: {{ user }}</h5>
+                <p></p>
+            {% else %}
+                <p>You're not logged in.</p>
+            {% endif %}
+        </div>
     </div>
-
-    <!-- Bootstrap 5.0.2 JS Bundle (optional, if you need JS components) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
-            crossorigin="anonymous"></script>
-    <!-- Include Bootstrap JS bundle for interactive components (e.g., modals, dropdowns) -->
-</body>
-</html>
+{% endblock %}
