@@ -4,13 +4,16 @@
         <h1 class="welcome-header">Welcome to Travel Blogs</h1>
         <p>Join us in exploring the world and sharing your experience for the world to see !!</p>
         
-        <div class="auth-message">
-            {% if request.user.is_authenticated %}
-                <h5>You are logged in as: {{ user }}</h5>
-                <p></p>
-            {% else %}
-                <p>You're not logged in.</p>
-            {% endif %}
+        <div class="footer">
+
+            <div class="auth-message">
+                {% if request.user.is_authenticated %}
+                    <h5>You are logged in as: {{ user }}</h5>
+                    <p></p>
+                {% else %}
+                    <p>You're not logged in.</p>
+                {% endif %}
+            </div>
         </div>
-    </div>
+    </div>    
 {% endblock %}

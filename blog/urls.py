@@ -14,4 +14,4 @@ urlpatterns = [
     path('create/', views.create_blog, name='blog_create'),
     path('blogs/<int:pk>/edit/', views.edit_blog, name='blog_edit'),  # Added
     path('signup/', views.signup, name='signup'),  # Added
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 

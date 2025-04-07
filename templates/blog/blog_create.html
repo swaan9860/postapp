@@ -10,16 +10,13 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="title" class="form-label">Title:</label>
-                <input type="text" name="title" id="title" class="form-control" required>
+                <input type="text" name="title" id="title" class="form-control" placeholder="Title" required>
             </div>
             <div class="mb-3">
-                <label for="description" class="form-label">Description:</label>
-                <textarea name="description" id="description" class="form-control" rows="5" required></textarea>
+                <textarea name="description" id="description" class="form-control" rows="5" placeholder="Description" required></textarea>
             </div>
-            <div class="mb-3">
-                <label for="picture" class="form-label">Picture (optional):</label>
-                <input type="file" name="picture" id="picture" class="form-control" accept="image/*">
+            <div class="mb-3">              
+                <input type="file" name="picture" id="picture" class="form-control" accept="image/*" placeholder="Upload image">
             </div>
             <button type="submit" class="btn btn-primary w-100">Create Blog</button>
         </form>

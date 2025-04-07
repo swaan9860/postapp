@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.urls import path
 from django.contrib import admin  # Import the admin module
+from django.conf import settings
+from django.conf.urls.static import static
 from blog import views
 
 urlpatterns = [
@@ -29,4 +31,4 @@ urlpatterns = [
     path('logout/', views.user_logout, name='user_logout'),
     path('signup/', views.signup, name='signup'),
     path('admin/', admin.site.urls),  # Add the admin URL
-    ]
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
