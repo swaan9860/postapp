@@ -118,7 +118,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    "/var/www/static/",
+]
 # Media files (Uploaded user content like pictures)
 # URL prefix for media files (e.g., /media/blog_pictures/image.jpg)
 MEDIA_URL = '/media/'

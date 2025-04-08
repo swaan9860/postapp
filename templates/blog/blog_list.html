@@ -1,24 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <style>
-      body { background-color:rgba(248, 249, 250, 0); padding: 20px; }
-      .p{color:rgb(35, 113, 42);}
-      .blog-container { max-width: 800px; margin: 0 auto; background-color:rgba(255, 255, 255, 0);}
-      .blog-header { color: #343a40; margin-bottom: 30px; }
-      .home-link { display: block; margin-bottom: 20px; }
-      .blog-item { background-color:rgba(255, 233, 233, 0); padding: 15px; margin-bottom: 20px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
-      .blog-title { margin: 0; }
-      .blog-title a { text-decoration: none; color: #007bff; }
-      .blog-title a:hover { text-decoration: underline; }
-      .no-blogs { color:rgba(147, 161, 173, 0); text-align: center; }
-      .blog-image { max-width: 180px; height: auto; margin-top: 10px; margin-bottom: 20px; margin-right: 0px; }
-    </style>
+
 <div class="blog-container">
       <h1 class="blog-header">All Blogs</h1>
       <a href="{% url 'home' %}" class="home-link btn btn-outline-primary">Home</a>

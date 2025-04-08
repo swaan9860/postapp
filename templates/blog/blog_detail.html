@@ -1,17 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-<style>
-      body { background-color: #f8f9fa; padding: 20px; }
-      .blog-container { max-width: 800px; margin: 0 auto; }
-      .blog-header { color: #343a40; margin-bottom: 30px; }
-      .home-link { display: block; margin-bottom: 20px; }
-      .blog-item { background-color: #ffffff; padding: 15px; margin-bottom: 20px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
-      .blog-title { margin: 0; }
-      .blog-title a { text-decoration: none; color: #007bff; }
-      .blog-title a:hover { text-decoration: underline; }
-      .no-blogs { color: #6c757d; text-align: center; }
-      .blog-image { max-width: 180px; height: auto; margin-top: 10px; margin-bottom: 20px; margin-right: 0px; }
-    </style>
 <div class="blog-container">
         <h1 class="blog-header">{{ blog.title }}</h1>
         <div class="blog-description">

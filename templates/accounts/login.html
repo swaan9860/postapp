@@ -1,33 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<!-- Declare the document type as HTML5 and set language to English -->
-<head>
-    <!-- Head section for metadata and external resources -->
-    <meta charset="UTF-8">
-    <!-- Set character encoding to UTF-8 for proper text display -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Ensure mobile responsiveness with viewport settings -->
-    <title>Login</title>
-    <!-- Page title shown in browser tab -->
-
-    <!-- Bootstrap 5.0.2 CSS from CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
-          rel="stylesheet" 
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
-          crossorigin="anonymous">
-    <!-- Include Bootstrap 5.0.2 CSS for styling and responsive design -->
-
+{% extends 'acc_base.html' %}
+{% block content %}
+<title>Login</title>
     <!-- Custom CSS -->
     <style>
-        body {
-            background-color: #f0f2f5;    /* Light gray-blue background for the page */
-            height: 100vh;               /* Full viewport height */
-            display: flex;               /* Flexbox for centering description */
-            justify-content: center;     /* Center horizontally */
-            align-items: center;         /* Center vertically */
-        }
+
         .login-container {
-            background-color: #ffffff;   /* White background for the form container */
+            background-color:rgba(255, 255, 255, 0.4);   /* White background for the form container */
             padding: 30px;              /* Internal padding for spacing */
             border-radius: 10px;        /* Rounded corners */
             box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
@@ -36,6 +14,7 @@
         }
         .form-label {
             font-weight: 500;           /* Slightly bold labels for readability */
+            color:rgb(17, 15, 15); 
             margin-bottom: 5px;         /* Space below labels */
         }
         .error-message {
@@ -44,6 +23,7 @@
         }
         .signup-link {
             margin-top: 15px;           /* Space above signup link */
+            color:rgb(17, 15, 15); 
             text-align: center;         /* Center the signup text and link */
         }
     </style>
@@ -72,17 +52,13 @@
             
             <div class="mb-3">
                 <!-- Bootstrap margin-bottom class for spacing -->
-                <label for="username" class="form-label">Username:</label>
-                <!-- Label with Bootstrap form-label class and custom styling -->
-                <input type="text" name="username" id="username" class="form-control" required>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
                 <!-- Text input with Bootstrap form-control for styling, required field -->
             </div>
 
             <div class="mb-3">
                 <!-- Bootstrap margin-bottom class for spacing -->
-                <label for="password" class="form-label">Password:</label>
-                <!-- Label for password field -->
-                <input type="password" name="password" id="password" class="form-control" required>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
                 <!-- Password input with Bootstrap form-control, required field -->
             </div>
 
@@ -104,4 +80,4 @@
             crossorigin="anonymous"></script>
     <!-- Include Bootstrap JS for potential interactive features -->
 </body>
-</html>
+{% endblock content %}
